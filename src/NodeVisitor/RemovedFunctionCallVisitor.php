@@ -11,6 +11,9 @@ class RemovedFunctionCallVisitor extends AbstractVisitor
     const LEVEL = Message::LEVEL_ERROR;
 
     protected $removedFunctionNames = array(
+	// Removed in php7.0-fpm, might cause false positives in php7.0 cli scripts.
+	'dl',
+
         // Removed in favor of call_user_func* functions
         'call_user_method',
         'call_user_method_array',
