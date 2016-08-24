@@ -17,7 +17,9 @@ class ContinueOrBreakInvalidContextVisitor extends AbstractVisitor {
 	private function isValidContext($node) {
 		return $node instanceof Node\Stmt\Foreach_ ||
 			$node instanceof Node\Stmt\While_ ||
-			$node instanceof Node\Stmt\Switch_;
+			$node instanceof Node\Stmt\Switch_ ||
+			$node instanceof Node\Stmt\Do_ ||
+			$node instanceof Node\Stmt\For_;
 	}
 
 	public function enterNode(Node $node) {
