@@ -10,6 +10,9 @@ class RemovedFunctionCallVisitor extends AbstractVisitor
 {
     const LEVEL = Message::LEVEL_ERROR;
 
+    /**
+     * @var string[]
+     */
     protected $removedFunctionNames = array(
 	// Removed in php7.0-fpm, might cause false positives in php7.0 cli scripts.
 	'dl',
@@ -152,6 +155,9 @@ class RemovedFunctionCallVisitor extends AbstractVisitor
         $this->removedFunctionNames = array_flip($this->removedFunctionNames);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function enterNode(Node $node)
     {
         if (!$this->functionAnalyzer->isFunctionCallByStaticName($node, $this->removedFunctionNames)) {

@@ -26,6 +26,9 @@ class ContainerBuilder
 {
     const BITWISE_SHIFT_VISITOR_ID = 'visitor.bitwiseShift';
 
+    /**
+     * @var array
+     */
     protected $checkerVisitors = array(
         'visitor.removedFunctionCall' => array(
             'class' => '\\Sstalle\\php7cc\\NodeVisitor\\RemovedFunctionCallVisitor',
@@ -50,6 +53,9 @@ class ContainerBuilder
         'visitor.funcGetArgs' => array(
             'class' => '\\Sstalle\\php7cc\\NodeVisitor\\FuncGetArgsVisitor',
             'dependencies' => array('nodeAnalyzer.functionAnalyzer'),
+        ),
+        'visitor.continueBreakOutsideLoop' => array(
+            'class' => '\\Sstalle\\php7cc\\NodeVisitor\\ContinueBreakOutsideLoopVisitor',
         ),
         'visitor.foreach' => array(
             'class' => '\\Sstalle\\php7cc\\NodeVisitor\\ForeachVisitor',
@@ -220,6 +226,9 @@ class ContainerBuilder
         return $container;
     }
 
+    /**
+     * @param Container $container
+     */
     protected function addVisitors(Container $container)
     {
         foreach ($this->checkerVisitors as $visitorServiceName => $visitorParameters) {
