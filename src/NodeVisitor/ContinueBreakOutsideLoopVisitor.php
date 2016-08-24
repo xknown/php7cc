@@ -16,14 +16,14 @@ class ContinueBreakOutsideLoopVisitor extends AbstractNestedLoopVisitor
     {
         parent::enterNode($node);
 
-        if (($node instanceof Node\Stmt\Break_ || $node instanceof Node\Stmt\Continue_)
-            && $this->getCurrentLoopStack()->isEmpty()
-        ) {
-            $messageText = sprintf(
-                '%s not in the loop or switch context',
-                $node instanceof Node\Stmt\Break_ ? 'break' : 'continue'
-            );
-            $this->addContextMessage($messageText, $node);
+        if ($node instanceof Node\Stmt\Break_ || $node instanceof Node\Stmt\Continue_) {
+            $statement = $node instanceof Node\Stmt\Break_ ? 'break' : 'continue';
+            $value = $node->num === null ? 0 : $node->num->value;
+            if ($this->getCurrentLoopStack()->isEmpty()) {
+                $this->addContextMessage(sprintf("%s not in the loop or switch context", $statement), $node);
+            } elseif ($value > $this->getCurrentLoopStack()->count()) {
+                $this->addContextMessage(sprintf("Cannot '%s' %d levels", $statement, $value), $node);
+            }
         }
     }
 
