@@ -112,9 +112,16 @@ class CLIResultPrinter implements ResultPrinterInterface
             );
         }
 
+	$level = '';
+	if ( $message->getLevel() === Message::LEVEL_ERROR ) {
+		$level = '[ERR ]';
+	} elseif ( $message->getLevel() === Message::LEVEL_WARNING ) {
+		$level = '[WARN]';
+	}
         return sprintf(
-            "> Line <fg=cyan>%s</fg=cyan>: %s\n    %s",
-            $message->getLine(),
+		">%s Line <fg=cyan>%s</fg=cyan>: %s\n    %s",
+		$level,
+	    $message->getLine(),
             $text,
             $prettyPrintedNodes
         );
